@@ -131,7 +131,7 @@ function buildAtlas() {
     'font-style': 'italic',
     'font-size': 11, fill: '#9aa5b4',
   }, title);
-  tt2.textContent = 'topology · sketched from procurement records';
+  tt2.textContent = 'topology · reconstructed from simulation parameters';
 
   /* Legend in the upper-right corner */
   const legend = el('g', { transform: 'translate(940, 32)' }, svg);
@@ -350,8 +350,104 @@ function showMarginalia() {
   });
 }
 
+/* ─── BFS order for scroll-scrubbed cascade ─── */
+function buildBFSOrder() {
+  const visited = [];
+  const queue = [ORIGIN_INDEX];
+  const seen = new Set([ORIGIN_INDEX]);
+  while (queue.length) {
+    const current = queue.shift();
+    visited.push(current);
+    EDGES.forEach(e => {
+      const next = e.a === current ? e.b : (e.b === current ? e.a : -1);
+      if (next !== -1 && !seen.has(next)) {
+        seen.add(next);
+        queue.push(next);
+      }
+    });
+  }
+  return visited;
+}
+
+/* ─── Build a scroll-scrubbed GSAP timeline for the cascade ─── */
+function buildCascadeTl(atlas) {
+  if (!atlas || typeof gsap === 'undefined') return null;
+  const { nodeEls, edgeRecs, svg } = atlas;
+
+  const tl = gsap.timeline({ paused: true });
+
+  /* Node rects */
+  const nodeRects = nodeEls.map(g => g.querySelector('rect'));
+
+  /* Create red-edge overlays (drawn on top of existing grey edges via dashoffset) */
+  const edgeLayer = svg.querySelector('.edges');
+  const redEdges = edgeRecs.map(r => {
+    const orig = r.el;
+    const dup  = document.createElementNS(NS, 'path');
+    dup.setAttribute('d',              orig.getAttribute('d'));
+    dup.setAttribute('fill',           'none');
+    dup.setAttribute('stroke',         '#e31a1a');
+    dup.setAttribute('stroke-width',   '1.6');
+    dup.setAttribute('stroke-linecap', 'round');
+    dup.setAttribute('opacity',        '0');
+    edgeLayer.appendChild(dup);
+    const total = orig.getTotalLength();
+    dup.setAttribute('stroke-dasharray',  String(total));
+    dup.setAttribute('stroke-dashoffset', String(total));
+    return { el: dup, total, a: r.a, b: r.b };
+  });
+
+  /* Pre-create VOID stamps (hidden in DOM from the start) */
+  const voidGroups = nodeEls.map((g, i) => {
+    const n     = NODES[i];
+    const angle = (i % 5 - 2) * 3.4;
+    const sg    = el('g', {
+      transform: `translate(${(n.w / 2).toFixed(1)},${(n.h / 2 + 2).toFixed(1)}) rotate(${angle})`,
+      class: 'void-stamp',
+      opacity: '0',
+    }, g);
+    el('rect', { x: -22, y: -8, width: 44, height: 14,
+      fill: 'none', stroke: '#e31a1a', 'stroke-width': 1.1, filter: 'url(#ink)' }, sg);
+    const st = el('text', { x: 0, y: 2.5, 'text-anchor': 'middle',
+      'font-family': 'JetBrains Mono, monospace', 'font-size': 8, 'font-weight': 700,
+      'letter-spacing': '0.18em', fill: '#e31a1a' }, sg);
+    st.textContent = 'VOID';
+    return sg;
+  });
+
+  /* Build timeline in BFS order */
+  const bfsOrder = buildBFSOrder();
+  bfsOrder.forEach((nodeIdx, step) => {
+    const t = step * 0.4;
+
+    /* Node turns red */
+    tl.to(nodeRects[nodeIdx], {
+      attr: { fill: '#fff0f0', stroke: '#e31a1a', 'stroke-width': '1.4' },
+      duration: 0.15,
+      ease: 'none',
+    }, t);
+
+    /* VOID stamp appears */
+    tl.to(voidGroups[nodeIdx], { opacity: 1, duration: 0.18 }, t + 0.08);
+
+    /* Draw outgoing red edges */
+    redEdges.filter(r => r.a === nodeIdx || r.b === nodeIdx).forEach((r, j) => {
+      tl.to(r.el, { opacity: 0.9, duration: 0.02 }, t + 0.12 + j * 0.04);
+      tl.to(r.el, {
+        attr: { 'stroke-dashoffset': '0' },
+        duration: 0.35,
+        ease: 'power1.inOut',
+      }, t + 0.14 + j * 0.04);
+    });
+  });
+
+  return tl;
+}
+
 window.Cascade = window.Cascade || {};
 window.Cascade.buildAtlas      = buildAtlas;
 window.Cascade.triggerCascade  = triggerCascade;
 window.Cascade.showMarginalia  = showMarginalia;
 window.Cascade.ORIGIN_INDEX    = ORIGIN_INDEX;
+window.Cascade.buildCascadeTl  = buildCascadeTl;
+window.Cascade.buildBFSOrder   = buildBFSOrder;

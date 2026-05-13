@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════════
    OPERATION CASCADE — INFRASTRUCTURE SECTORS
-   GSAP-pinned scroll sequence. Five full-viewport
-   panels cycling through critical sectors.
+   Scroll-scrubbed panel sequence. Animation progress
+   is tied directly to scroll position and reverses
+   on scroll-up. No independent timers.
    ═══════════════════════════════════════════════════ */
 
 window.Cascade = window.Cascade || {};
@@ -24,9 +25,9 @@ const SECTOR_DATA = [
     sub:   'Medical Supply & Patient Systems',
     stat:  '31% of healthcare organizations have at least one autonomous agent in production — none governed by an accredited inter-agent standard',
     risks: [
-      'Medical supply chain coordination AI sources pharmaceuticals, devices, and biologics across 20+ jurisdictions without a common trust framework.',
+      'Medical supply chain coordination AI sources pharmaceuticals, devices, and biologics across multiple jurisdictions without a common trust framework.',
       '31% of healthcare organizations currently have at least one autonomous agent in production. No accredited standard governs cross-border instruction authentication.',
-      'Multi-agent procurement chains produce no human-readable authorization trail. Bill C-8 personal director liability applies regardless of whether a human directed the harm.',
+      'Multi-agent procurement chains produce no human-readable authorization trail. Personal director liability applies regardless of whether a human directed the harm.',
     ],
   },
   {
@@ -57,7 +58,7 @@ const SECTOR_DATA = [
     sub:   'Banking, Payments & Trade Finance',
     stat:  'Multi-agent orchestration in financial services: 1% → 22% in two years. 80% of workers use unapproved AI tools.',
     risks: [
-      'Cross-border payment and trade-finance AI operates across 12+ regulatory jurisdictions simultaneously — no interoperable trust standard exists for this interaction.',
+      'Cross-border payment and trade-finance AI operates across multiple regulatory jurisdictions simultaneously — no interoperable trust standard exists for this interaction.',
       'Multi-agent orchestration in financial services jumped from 1% to 22% of deployments in two years. The governance infrastructure has not moved.',
       '80% of workers use unapproved AI tools; only 11% using generative AI at work do so through governed corporate channels. In finance, that is systemic risk.',
     ],
@@ -110,68 +111,77 @@ function initSectors() {
   if (!panels.length) return;
 
   const wrapper = document.getElementById('sectors');
+  const N = SECTOR_DATA.length;
 
-  /* Set all panels stacked on top of each other, all hidden except first */
+  /* Stack panels, all hidden except first */
   gsap.set(panels, { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' });
-  gsap.set(panels.slice(1), { opacity: 0 });
+  gsap.set(panels, { opacity: 0 });
+  gsap.set(panels[0], { opacity: 1 });
 
-  /* Pin the wrapper for 5 × 100vh = 500vh of scroll */
+  /* Pre-hide all content so the scrub timeline reveals it */
+  panels.forEach(panel => {
+    gsap.set(panel.querySelectorAll('.risk-point'), { opacity: 0, x: 32 });
+    const line = panel.querySelector('.sp-stat-line');
+    const text = panel.querySelector('.sp-stat-text');
+    if (line) gsap.set(line, { scaleX: 0 });
+    if (text) gsap.set(text, { opacity: 0, y: 8 });
+  });
+
+  /* ── Master scrub timeline ──
+     Each step occupies 1 unit of timeline-space.
+     Transitions fire at the 100 / 200 / 300 / 400 vh marks.
+     Cross-fade overlap = 0.4 units.
+     Content animation starts 0.1 units after panel is visible.          */
+  const STEP   = 1;
+  const XFADE  = 0.4;
+
+  const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
+
+  /* Panel 0: reveal content immediately at time 0 */
+  const p0risks = panels[0].querySelectorAll('.risk-point');
+  const p0line  = panels[0].querySelector('.sp-stat-line');
+  const p0text  = panels[0].querySelector('.sp-stat-text');
+  tl.to(p0risks, { opacity: 1, x: 0, duration: 0.22, stagger: 0.05 }, 0.02);
+  if (p0line) tl.fromTo(p0line, { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power3.out' }, 0.18);
+  if (p0text) tl.to(p0text, { opacity: 1, y: 0, duration: 0.22 }, 0.42);
+
+  for (let i = 1; i < N; i++) {
+    const base         = (i - 1) * STEP;
+    const fadeOutStart = base + STEP - XFADE;
+    const fadeInStart  = base + STEP - XFADE * 0.5;
+    const contentAt    = base + STEP + 0.1;
+
+    /* Outgoing panel fades out */
+    tl.to(panels[i - 1], { opacity: 0, scale: 0.97, duration: XFADE }, fadeOutStart);
+
+    /* Incoming panel fades in */
+    tl.fromTo(panels[i],
+      { opacity: 0, scale: 1.04 },
+      { opacity: 1, scale: 1, duration: XFADE },
+      fadeInStart
+    );
+
+    /* Content appears shortly after the panel is visible */
+    const risks = panels[i].querySelectorAll('.risk-point');
+    tl.to(risks, { opacity: 1, x: 0, duration: 0.22, stagger: 0.05 }, contentAt);
+
+    const line = panels[i].querySelector('.sp-stat-line');
+    if (line) tl.fromTo(line, { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power3.out' }, contentAt + 0.18);
+
+    const text = panels[i].querySelector('.sp-stat-text');
+    if (text) tl.to(text, { opacity: 1, y: 0, duration: 0.22 }, contentAt + 0.38);
+  }
+
+  /* ── Single pinned ScrollTrigger drives the whole timeline ── */
   ScrollTrigger.create({
     trigger: wrapper,
     start: 'top top',
-    end: `+=${SECTOR_DATA.length * 100}%`,
+    end: `+=${N * 100}%`,
     pin: true,
     pinSpacing: true,
+    scrub: 1.5,   /* animation lags scroll by 1.5s for cinematic smoothness */
+    animation: tl,
   });
-
-  /* Each panel gets its own trigger window */
-  panels.forEach((panel, i) => {
-    const totalScrollLength = SECTOR_DATA.length * 100;
-    const startPct = i * 100;
-    const endPct   = (i + 1) * 100;
-
-    ScrollTrigger.create({
-      trigger: wrapper,
-      start: `top+=${startPct}% top`,
-      end:   `top+=${endPct}% top`,
-      onEnter:     () => activatePanel(panels, i),
-      onEnterBack: () => activatePanel(panels, i),
-    });
-  });
-}
-
-function activatePanel(panels, i) {
-  /* Fade out all */
-  panels.forEach((p, j) => {
-    if (j !== i) gsap.to(p, { opacity: 0, duration: 0.3, ease: 'power2.in' });
-  });
-
-  /* Animate in the target panel */
-  gsap.fromTo(
-    panels[i],
-    { opacity: 0, scale: 1.04 },
-    { opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out' }
-  );
-
-  /* Stagger risk points */
-  const risks = panels[i].querySelectorAll('.risk-point');
-  gsap.fromTo(
-    risks,
-    { x: 40, opacity: 0 },
-    { x: 0, opacity: 1, duration: 0.55, stagger: 0.1, ease: 'power3.out', delay: 0.35 }
-  );
-
-  /* Draw the stat line */
-  const statLine = panels[i].querySelector('.sp-stat-line');
-  if (statLine) {
-    gsap.fromTo(statLine, { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power3.out', delay: 0.6 });
-  }
-
-  gsap.fromTo(
-    panels[i].querySelector('.sp-stat-text'),
-    { opacity: 0, y: 10 },
-    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.85 }
-  );
 }
 
 window.Cascade.initSectors = initSectors;

@@ -367,23 +367,66 @@ body {
 .sector-panel { position: absolute; inset: 0; display: flex; flex-direction: column; }
 
 .sp-bg { position: absolute; inset: 0; z-index: 0; }
-.sp-bg--energy    { background: linear-gradient(135deg, #1a0e02 0%, #2a1800 40%, #0e0a04 100%); }
-.sp-bg--healthcare{ background: linear-gradient(135deg, #f0f4f8 0%, #d8e4ef 50%, #edf2f7 100%); }
-.sp-bg--logistics { background: linear-gradient(135deg, #0e1117 0%, #1a2030 50%, #0a0e16 100%); }
-.sp-bg--defence   { background: linear-gradient(135deg, #060709 0%, #0e0e12 40%, #14060a 100%); }
-.sp-bg--finance   { background: linear-gradient(135deg, #08090c 0%, #121620 50%, #0c0d11 100%); }
+
+/* PHOTO SLOT: replace background-image: url('assets/sector-energy.jpg'), [radial-gradients]; */
+.sp-bg--energy {
+  background-color: #06030000;
+  background-image:
+    radial-gradient(ellipse 75% 55% at 68% 28%, rgba(190,65,0,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 35% at 15% 78%, rgba(130,42,0,0.32) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 40% at 88% 72%, rgba(90,18,0,0.25) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 20% at 50% 95%, rgba(160,50,0,0.2) 0%, transparent 50%);
+  background-color: #060200;
+}
+
+/* PHOTO SLOT: replace background-image: url('assets/sector-healthcare.jpg'), [radial-gradients]; */
+.sp-bg--healthcare {
+  background-color: #f4f8fc;
+  background-image:
+    radial-gradient(ellipse 65% 50% at 78% 18%, rgba(185,215,248,0.65) 0%, transparent 58%),
+    radial-gradient(ellipse 50% 40% at 12% 72%, rgba(162,198,238,0.45) 0%, transparent 62%),
+    radial-gradient(ellipse 40% 30% at 55% 55%, rgba(200,220,245,0.3) 0%, transparent 55%);
+}
+
+/* PHOTO SLOT: replace background-image: url('assets/sector-logistics.jpg'), [radial-gradients]; */
+.sp-bg--logistics {
+  background-color: #020609;
+  background-image:
+    radial-gradient(ellipse 90% 45% at 58% 82%, rgba(18,48,100,0.65) 0%, transparent 58%),
+    radial-gradient(ellipse 40% 40% at 8%  28%, rgba(28,58,118,0.4) 0%, transparent 60%),
+    radial-gradient(ellipse 25% 18% at 88% 12%, rgba(10,30,75,0.35) 0%, transparent 55%);
+}
+
+/* PHOTO SLOT: replace background-image: url('assets/sector-defence.jpg'), [radial-gradients]; */
+.sp-bg--defence {
+  background-color: #02010a;
+  background-image:
+    radial-gradient(ellipse 100% 28% at 50% 100%, rgba(130,0,0,0.40) 0%, transparent 58%),
+    radial-gradient(ellipse 35% 28% at 78% 38%, rgba(85,0,0,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 20% 15% at 12% 20%, rgba(60,0,0,0.18) 0%, transparent 55%);
+}
+
+/* PHOTO SLOT: replace background-image: url('assets/sector-finance.jpg'), [radial-gradients]; */
+.sp-bg--finance {
+  background-color: #03040d;
+  background-image:
+    radial-gradient(ellipse 65% 48% at 82% 58%, rgba(38,48,118,0.55) 0%, transparent 58%),
+    radial-gradient(ellipse 40% 32% at 18% 28%, rgba(55,65,148,0.38) 0%, transparent 62%),
+    radial-gradient(ellipse 20% 14% at 48% 88%, rgba(105,50,0,0.25) 0%, transparent 50%);
+}
+
 .sp-bg::after {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(227,26,26,0.07) 60px, rgba(227,26,26,0.07) 61px),
-    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(227,26,26,0.05) 80px, rgba(227,26,26,0.05) 81px);
+    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(227,26,26,0.04) 60px, rgba(227,26,26,0.04) 61px),
+    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(227,26,26,0.03) 80px, rgba(227,26,26,0.03) 81px);
 }
 .sp-bg--healthcare::after {
   background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(154,165,180,0.18) 40px, rgba(154,165,180,0.18) 41px),
-    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(154,165,180,0.18) 40px, rgba(154,165,180,0.18) 41px);
+    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(154,165,180,0.12) 40px, rgba(154,165,180,0.12) 41px),
+    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(154,165,180,0.12) 40px, rgba(154,165,180,0.12) 41px);
 }
 
 .sp-content {

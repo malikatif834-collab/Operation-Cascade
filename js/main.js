@@ -19,39 +19,39 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ─── GSAP scroll reveals ─── */
   if (window.Cascade.initTypography) window.Cascade.initTypography();
 
-  /* ─── Cascade trigger: fires when .cascade-block enters viewport ─── */
+  /* ─── Cascade: scroll-scrubbed timeline ─── */
+  const schematicWrap = document.querySelector('.schematic-wrap');
+  if (schematicWrap && atlas && typeof ScrollTrigger !== 'undefined') {
+    /* Wait one frame so SVG is laid out and getTotalLength() returns accurate values */
+    requestAnimationFrame(() => {
+      const cascadeTl = window.Cascade.buildCascadeTl(atlas);
+      if (cascadeTl) {
+        ScrollTrigger.create({
+          trigger: schematicWrap,
+          start: 'top 55%',
+          end: 'bottom 15%',
+          scrub: 2,
+          animation: cascadeTl,
+        });
+      }
+    });
+  }
+
+  /* ─── Counters + marginalia fire once when cascade-block enters view ─── */
   let cascadeFired = false;
   const cascadeBlock = document.querySelector('.cascade-block');
-
-  if (cascadeBlock && atlas) {
-    if (typeof ScrollTrigger !== 'undefined') {
-      ScrollTrigger.create({
-        trigger: cascadeBlock,
-        start: 'top 70%',
-        onEnter: () => {
-          if (!cascadeFired) {
-            cascadeFired = true;
-            window.Cascade.triggerCascade(null, atlas);
-            window.Cascade.showMarginalia();
-            startCounters();
-          }
-        },
-      });
-    } else {
-      /* Fallback: IntersectionObserver if GSAP not available */
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting && !cascadeFired) {
-            cascadeFired = true;
-            window.Cascade.triggerCascade(null, atlas);
-            window.Cascade.showMarginalia();
-            startCounters();
-            io.disconnect();
-          }
-        });
-      }, { threshold: 0.3 });
-      io.observe(cascadeBlock);
-    }
+  if (cascadeBlock && typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.create({
+      trigger: cascadeBlock,
+      start: 'top 75%',
+      onEnter: () => {
+        if (!cascadeFired) {
+          cascadeFired = true;
+          window.Cascade.showMarginalia();
+          startCounters();
+        }
+      },
+    });
   }
 
   /* ─── Modal ─── */
