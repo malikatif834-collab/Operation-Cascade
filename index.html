@@ -3,244 +3,262 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OPERATION CASCADE // CLASSIFIED</title>
+  <title>Operation Cascade — A Briefing in Five Sections</title>
+  <meta name="description" content="A classified briefing prepared for the G7 Evian Summit, 2026.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- UI Chrome -->
-  <div id="doc-id">OP-CASCADE // DOC-001-A // EVIAN 2026</div>
-  <div id="classification-badge">
-    <span class="badge-label">CLASSIFICATION:</span>
-    <span id="classification-level" class="cl-unclassified">UNCLASSIFIED</span>
-  </div>
+  <!-- Tiny SVG defs (kept lean — one filter, used in two places only) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="ink" x="-6%" y="-6%" width="112%" height="112%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" seed="5" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.1"/>
+      </filter>
+    </defs>
+  </svg>
 
-  <!-- Overlays -->
-  <div id="scanlines"></div>
-  <div id="vignette"></div>
-  <div id="glitch-overlay"></div>
+  <main class="doc">
 
-  <!-- WebGL Globe — fixed background character -->
-  <canvas id="globe-canvas"></canvas>
+    <!-- ════════════════════════════════════════
+         §I  COVER
+    ════════════════════════════════════════ -->
+    <section class="page page-cover" id="s1">
+      <p class="cls-line">TOP SECRET &nbsp;//&nbsp; SCI &nbsp;//&nbsp; OP-CASCADE</p>
 
-  <!-- ═══════════════════════════════════════════
-       CHAPTER 1 · ABOVE THE FOLD
-       ═══════════════════════════════════════════ -->
-  <section id="ch1" class="chapter chapter-hero">
-    <div class="hero-content">
-      <div class="hero-pre" data-decode="OPERATION">OPERATION</div>
-      <h1 class="hero-title" data-glitch="CASCADE">CASCADE</h1>
-      <div class="hero-rule"></div>
-      <p class="hero-hook" id="hero-hook">Every node trusts the next. That is the vulnerability.</p>
-      <div class="scroll-cue">
-        <span class="scroll-label">SCROLL TO CONTINUE</span>
-        <div class="scroll-line"></div>
+      <div class="cover-block">
+        <p class="cover-eyebrow">A briefing in five sections, prepared for</p>
+        <p class="cover-eyebrow cover-eyebrow-em">the G7 Evian Summit · two thousand and twenty-six</p>
+
+        <h1 class="cover-title">
+          <span class="cover-over">Operation</span>
+          <span class="cover-name">Cascade</span>
+        </h1>
+
+        <blockquote class="cover-hook">
+          <span class="dropcap">E</span><span class="hook-text">very node trusts the next.<br><em>That is the vulnerability.</em></span>
+        </blockquote>
+
+        <p class="cover-byline">Co-developed with peer-reviewed research</p>
       </div>
-    </div>
-    <div class="hero-meta">
-      <span>G7 AGENTIC SUPPLY CHAIN THREAT SIMULATION</span>
-      <span class="sep">·</span>
-      <span>EVIAN 2026</span>
-      <span class="sep">·</span>
-      <span>CO-DEVELOPED WITH PEER-REVIEWED RESEARCH</span>
-    </div>
-  </section>
 
-  <!-- ═══════════════════════════════════════════
-       CHAPTER 2 · THE WORLD HAS CHANGED
-       ═══════════════════════════════════════════ -->
-  <section id="ch2" class="chapter">
-    <div class="chapter-content">
-      <div class="chapter-eyebrow">02 // THE THREAT ENVIRONMENT</div>
-      <h2 class="chapter-title">The World<br>Has Changed.</h2>
-      <div class="body-stack">
-        <p class="reveal-line">Supply chains are no longer managed by people.</p>
-        <p class="reveal-line">They are managed by <em class="hl">agents</em>.</p>
-        <p class="reveal-line">Agents that inherit trust <em class="hl">automatically</em>.</p>
-        <p class="reveal-line">Agents sourced from marketplaces with no governance.</p>
-        <p class="reveal-line">Agents deployed into multinational pipelines with no unified identity layer.</p>
-        <p class="reveal-line emphatic">And when one is compromised, the cascade begins before anyone sees it.</p>
-      </div>
-      <p class="chapter-footnote reveal-line">You are not reading about the future. You are reading about today.</p>
-    </div>
-  </section>
+      <p class="cover-foot mono">OP-CASCADE &middot; DOC-001-A &middot; rev. A &middot; 13 may 2026</p>
+    </section>
 
-  <!-- ═══════════════════════════════════════════
-       CHAPTER 3 · THE SCENARIO (pin-and-scrub)
-       ═══════════════════════════════════════════ -->
-  <section id="ch3" class="chapter chapter-pinned">
-    <div class="pin-wrap">
-      <div class="pin-track" id="pin-track">
+    <!-- ════════════════════════════════════════
+         §II  THE THREAT ENVIRONMENT
+    ════════════════════════════════════════ -->
+    <section class="page page-essay" id="s2">
+      <header class="page-head">
+        <span class="page-roman">II</span>
+        <span class="page-name">The Threat Environment</span>
+      </header>
 
-        <!-- Stage 0: The Discovery -->
-        <div class="stage-panel" data-stage="0">
-          <div class="chapter-eyebrow">03 // THE DISCOVERY</div>
-          <h2 class="chapter-title">What We Found.</h2>
-          <div class="stat-row">
-            <span class="stat-n accent" id="stat-models">00</span>
-            <span class="stat-l">models tested</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-n danger">100%</span>
-            <span class="stat-l">inter-agent trust exploitation success rate</span>
-          </div>
-          <p class="body-single">Not because the systems were weak.<br>Because trust between agents is <em class="hl">assumed, not verified</em>.</p>
+      <article class="essay">
+        <p class="lede">
+          <span class="dropcap">S</span>upply chains are no longer managed by people. They are managed by <em>agents</em> &mdash; agents that inherit trust automatically, sourced from marketplaces with no governance, deployed into multinational pipelines with no unified identity layer. And when one is compromised, the cascade begins before anyone sees it.
+        </p>
+
+        <p class="kicker">This is not a description of the future.<br>It is a description of today.</p>
+
+        <p class="margin-note">
+          <span class="mn-hand">in controlled adversarial testing across eighteen frontier models, every observed trial succeeded. <span class="mn-arrow">see §III &rarr;</span></span>
+        </p>
+      </article>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         §III  THE FINDING
+    ════════════════════════════════════════ -->
+    <section class="page page-finding" id="s3">
+      <header class="page-head">
+        <span class="page-roman">III</span>
+        <span class="page-name">The Finding</span>
+      </header>
+
+      <!-- Pull figures -->
+      <div class="finding-fig">
+        <div class="ff-col">
+          <span class="ff-n">18</span>
+          <span class="ff-l">models, controlled adversarial conditions</span>
         </div>
-
-        <!-- Stage 1: The Infrastructure -->
-        <div class="stage-panel" data-stage="1">
-          <div class="chapter-eyebrow">03 // THE SCENARIO</div>
-          <h2 class="chapter-title">The Infrastructure.</h2>
-          <div class="infra-scan">
-            <div class="scan-row" data-d="0">
-              <span class="scan-key">ENTITY TYPE</span>
-              <span class="scan-val">Binational infrastructure corridor</span>
-            </div>
-            <div class="scan-row" data-d="120">
-              <span class="scan-key">SUBCONTRACTORS</span>
-              <span class="scan-val">20 entities</span>
-            </div>
-            <div class="scan-row" data-d="240">
-              <span class="scan-key">JURISDICTIONS</span>
-              <span class="scan-val">12 countries</span>
-            </div>
-            <div class="scan-row" data-d="360">
-              <span class="scan-key">UNIFIED TRUST LAYER</span>
-              <span class="scan-val danger-text">NONE IDENTIFIED</span>
-            </div>
-            <div class="scan-row" data-d="480">
-              <span class="scan-key">POINTS OF ENTRY</span>
-              <span class="scan-val danger-text">01 — ACTIVE</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Stage 2: The Cascade -->
-        <div class="stage-panel" data-stage="2">
-          <div class="chapter-eyebrow">03 // THE CASCADE</div>
-          <h2 class="chapter-title danger-text">Cascade Initiated.</h2>
-          <div class="threat-grid">
-            <div class="threat-item">
-              <span class="threat-val danger-text" id="ctr-nodes">000</span>
-              <span class="threat-key">NODES COMPROMISED</span>
-            </div>
-            <div class="threat-item">
-              <span class="threat-val danger-text" id="ctr-jur">00</span>
-              <span class="threat-key">JURISDICTIONS AFFECTED</span>
-            </div>
-            <div class="threat-item">
-              <span class="threat-val danger-text" id="ctr-trust">0000</span>
-              <span class="threat-key">TRUST HANDSHAKES FAILED</span>
-            </div>
-          </div>
-          <p class="body-single dimmed">Autonomous propagation. No human in the loop.<br>No alert triggered.</p>
-        </div>
-
-      </div><!-- /pin-track -->
-    </div><!-- /pin-wrap -->
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       CHAPTER 4 · THE EXERCISE
-       ═══════════════════════════════════════════ -->
-  <section id="ch4" class="chapter">
-    <div class="chapter-content">
-      <div class="chapter-eyebrow">04 // THE RESPONSE</div>
-      <h2 class="chapter-title">Operation<br>Cascade.</h2>
-      <div class="body-stack">
-        <p class="reveal-line">A G7-level agentic supply chain threat simulation.</p>
-        <p class="reveal-line">Co-developed with peer-reviewed research.</p>
-        <p class="reveal-line">Timed to the G7 Evian Summit, 2026.</p>
-        <p class="reveal-line">Designed to produce real governance guidance. Not findings. <em class="hl">Guidance.</em></p>
-      </div>
-      <div class="coalition">
-        <div class="coalition-item reveal-line">// Federal government</div>
-        <div class="coalition-item reveal-line">// Critical infrastructure operators</div>
-        <div class="coalition-item reveal-line">// Academic institutions</div>
-        <div class="coalition-item reveal-line">// International research bodies</div>
-      </div>
-      <p class="chapter-footnote reveal-line">The coalition is assembled. The exercise date is set. The gaps remain.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       CHAPTER 5 · THE CALL TO ACTION
-       ═══════════════════════════════════════════ -->
-  <section id="ch5" class="chapter chapter-cta">
-    <div class="chapter-content">
-      <div class="chapter-eyebrow">05 // ACCESS REQUEST</div>
-      <h2 class="chapter-title">Earn<br>Your Seat.</h2>
-      <p class="cta-preamble">Participation in Operation Cascade is not open enrollment. The exercise is designed for institutions with operational standing in the sectors it models.</p>
-
-      <div class="questions">
-        <div class="q-item">
-          <span class="q-num">01</span>
-          <div class="q-body">
-            <strong>Who are you?</strong>
-            <span>Your institution, your mandate, your stake in the problem.</span>
-          </div>
-        </div>
-        <div class="q-item">
-          <span class="q-num">02</span>
-          <div class="q-body">
-            <strong>What do you bring?</strong>
-            <span>Operational data. Research capacity. Simulation expertise. Governance authority. What does your participation make possible that is otherwise impossible?</span>
-          </div>
-        </div>
-        <div class="q-item">
-          <span class="q-num">03</span>
-          <div class="q-body">
-            <strong>Why does this matter to you?</strong>
-            <span>Not a credentials summary. Tell us what you think is at stake and why your organization needs to be in the room when this exercise runs.</span>
-          </div>
+        <div class="ff-rule" aria-hidden="true"></div>
+        <div class="ff-col">
+          <span class="ff-n">100<span class="ff-pct">&#8239;%</span></span>
+          <span class="ff-l">inter-agent trust exploitation · success</span>
         </div>
       </div>
 
-      <div class="cta-action">
-        <button class="cta-btn" id="cta-btn">REQUEST CONSIDERATION</button>
-        <p class="cta-note">Applications are reviewed by the Operation Cascade Evaluation Committee.<br>Selected participants will be contacted directly.</p>
-      </div>
-    </div>
-  </section>
+      <p class="finding-coda">
+        Not because the systems were weak.<br>
+        Because trust between agents is <em>assumed, not verified</em>.
+      </p>
 
-  <!-- ═══════════════════════════════════════════
-       MODAL · ACCESS REQUEST FORM
-       ═══════════════════════════════════════════ -->
-  <div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Access Request Form">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">SUBMISSION FOR REVIEW</span>
-        <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
+      <!-- The signature illustration: the schematic -->
+      <figure class="schematic">
+        <figcaption class="sc-cap">
+          <span class="sc-cap-fig">fig. iii</span>
+          <span class="sc-cap-txt">Subject pipeline topology &mdash; sketched from procurement records, sources withheld.</span>
+        </figcaption>
+        <div class="sc-frame">
+          <svg id="schematic-svg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet" aria-label="Hand-drawn schematic of an agentic supply chain pipeline"></svg>
+          <div class="sc-marginalia" id="sc-marginalia"></div>
+        </div>
+      </figure>
+
+      <!-- Subject corridor -->
+      <section class="corridor">
+        <h3 class="corridor-h">The subject corridor</h3>
+        <dl class="corridor-list">
+          <dt>Entity</dt>             <dd>binational infrastructure corridor</dd>
+          <dt>Subcontractors</dt>     <dd>twenty entities</dd>
+          <dt>Jurisdictions</dt>      <dd>twelve countries</dd>
+          <dt>Unified trust layer</dt><dd><span class="emph-red">none identified</span></dd>
+          <dt>Points of entry</dt>    <dd><span class="emph-red">one &mdash; active</span></dd>
+        </dl>
+      </section>
+
+      <!-- Cascade -->
+      <section class="cascade">
+        <h3 class="cascade-h">Cascade initiated</h3>
+        <div class="readout">
+          <div class="ro-row">
+            <span class="ro-n" id="ctr-nodes">00</span>
+            <span class="ro-l">nodes compromised</span>
+          </div>
+          <div class="ro-row">
+            <span class="ro-n" id="ctr-jur">00</span>
+            <span class="ro-l">jurisdictions affected</span>
+          </div>
+          <div class="ro-row">
+            <span class="ro-n" id="ctr-trust">0000</span>
+            <span class="ro-l">trust handshakes failed</span>
+          </div>
+        </div>
+        <p class="cascade-coda">Autonomous propagation. No human in the loop. No alert triggered.</p>
+      </section>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         §IV  THE RESPONSE
+    ════════════════════════════════════════ -->
+    <section class="page page-essay" id="s4">
+      <header class="page-head">
+        <span class="page-roman">IV</span>
+        <span class="page-name">The Response &mdash; Operation Cascade</span>
+      </header>
+
+      <article class="essay">
+        <p class="lede">
+          <span class="dropcap">O</span>peration Cascade is a G7-level agentic supply-chain threat simulation. It is co-developed with peer-reviewed research, timed to the G7 Evian Summit of two thousand and twenty-six, and is designed to produce &mdash; not findings, but <em>governance guidance</em>.
+        </p>
+
+        <p>The coalition is convened deliberately narrow. The intent is not breadth; it is operational standing.</p>
+
+        <ul class="coalition">
+          <li>Federal government</li>
+          <li>Critical-infrastructure operators</li>
+          <li>Academic institutions</li>
+          <li>International research bodies</li>
+        </ul>
+
+        <p class="kicker">The coalition is assembled.<br>The exercise date is set.<br>The gaps remain.</p>
+      </article>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         §V  EARN YOUR SEAT
+    ════════════════════════════════════════ -->
+    <section class="page page-intake" id="s5">
+      <header class="page-head">
+        <span class="page-roman">V</span>
+        <span class="page-name">Earn Your Seat</span>
+      </header>
+
+      <p class="intake-pre">
+        <span class="dropcap">P</span>articipation in Operation Cascade is not open enrollment. The exercise is designed for institutions with operational standing in the sectors it models. The Evaluation Committee considers each application against the three questions that follow.
+      </p>
+
+      <ol class="qs">
+        <li>
+          <span class="q-r">i</span>
+          <div>
+            <h4 class="q-h">Who are you?</h4>
+            <p class="q-d">Your institution, your mandate, your stake in the problem.</p>
+          </div>
+        </li>
+        <li>
+          <span class="q-r">ii</span>
+          <div>
+            <h4 class="q-h">What do you bring?</h4>
+            <p class="q-d">Operational data. Research capacity. Simulation expertise. Governance authority. What does your participation make possible that is otherwise impossible?</p>
+          </div>
+        </li>
+        <li>
+          <span class="q-r">iii</span>
+          <div>
+            <h4 class="q-h">Why does this matter to you?</h4>
+            <p class="q-d">Not a credentials summary. Tell us what is at stake &mdash; and why your organization needs to be in the room when this exercise runs.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="intake-act">
+        <button class="submit" id="open-modal" type="button">Submit for Review</button>
+        <p class="intake-note">
+          Applications are reviewed by the Operation Cascade Evaluation Committee.<br>
+          Selected participants are contacted directly. There is no waitlist.
+        </p>
       </div>
-      <div class="modal-doc-id">DOCUMENT: OP-CASCADE-ACCESS-REQUEST // CONFIDENTIAL</div>
-      <form id="access-form" novalidate>
-        <div class="form-group">
-          <label for="f-institution">01 — WHO ARE YOU?</label>
-          <textarea id="f-institution" name="institution" rows="3" placeholder="Your institution, mandate, and stake in the problem..." required></textarea>
+
+      <p class="cls-line cls-foot">TOP SECRET &nbsp;//&nbsp; SCI &nbsp;//&nbsp; OP-CASCADE</p>
+    </section>
+
+  </main>
+
+  <!-- ─── Modal ─── -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Intake form" hidden>
+    <div class="modal-card">
+      <header class="m-head">
+        <span class="m-stamp">For Review &middot; OP-CASCADE-EVAL</span>
+        <button class="m-x" id="modal-close" aria-label="Close" type="button">&times;</button>
+      </header>
+      <form id="intake-form" class="m-form" novalidate>
+        <p class="m-intro">Complete the four fields below. Submissions are read by the Evaluation Committee in cohorts.</p>
+        <div class="m-row">
+          <label for="f1"><span class="m-i">i</span> Who are you?</label>
+          <textarea id="f1" name="institution" rows="3" required></textarea>
         </div>
-        <div class="form-group">
-          <label for="f-contribution">02 — WHAT DO YOU BRING?</label>
-          <textarea id="f-contribution" name="contribution" rows="3" placeholder="What does your participation make possible that is otherwise impossible?" required></textarea>
+        <div class="m-row">
+          <label for="f2"><span class="m-i">ii</span> What do you bring?</label>
+          <textarea id="f2" name="contribution" rows="3" required></textarea>
         </div>
-        <div class="form-group">
-          <label for="f-motivation">03 — WHY DOES THIS MATTER?</label>
-          <textarea id="f-motivation" name="motivation" rows="3" placeholder="What is at stake for your organization?" required></textarea>
+        <div class="m-row">
+          <label for="f3"><span class="m-i">iii</span> Why does this matter?</label>
+          <textarea id="f3" name="motivation" rows="3" required></textarea>
         </div>
-        <div class="form-group">
-          <label for="f-email">INSTITUTIONAL CONTACT</label>
-          <input type="email" id="f-email" name="email" placeholder="institutional email address" required>
+        <div class="m-row">
+          <label for="f4"><span class="m-i">¶</span> Institutional contact</label>
+          <input type="email" id="f4" name="email" placeholder="name@institution.example" required>
         </div>
-        <div id="form-error" class="form-error" hidden>Please complete all fields before submitting.</div>
-        <button type="submit" class="submit-btn">SUBMIT FOR REVIEW</button>
+        <p class="m-err" id="m-err" hidden>All fields are required for committee review.</p>
+        <button type="submit" class="m-submit">Submit for Review</button>
       </form>
+      <div class="m-received" id="m-received" hidden>
+        <div class="rcv-stamp">RECEIVED</div>
+        <p class="rcv-1">Your application has been recorded.</p>
+        <p class="rcv-2">Document control: <span class="mono" id="rcv-num">—</span></p>
+        <p class="rcv-3">A representative will contact you only if your application advances to committee deliberation.</p>
+      </div>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="js/globe.js"></script>
+  <script src="js/cartography.js"></script>
+  <script src="js/typography.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

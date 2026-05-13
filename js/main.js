@@ -1,285 +1,123 @@
-/* ═══════════════════════════════════════════════
-   OPERATION CASCADE · MAIN ORCHESTRATOR
-   ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   OPERATION CASCADE — ORCHESTRATOR
+   ═══════════════════════════════════════════════════ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
-  /* ─── Boot sequence ──────────────────────────── */
-  const globe = new CascadeGlobe('globe-canvas');
+  /* ─── Build the schematic synchronously (no network fetch) ─── */
+  const atlas = window.Cascade.buildAtlas();
 
-  /* ═══════════════════════════════════════════
-     CLASSIFICATION ESCALATOR
-  ═══════════════════════════════════════════ */
+  /* ─── Wait for fonts, then ink-in reveals ─── */
+  await window.Cascade.initTypography();
 
-  const clEl     = document.getElementById('classification-level');
-  const clLevels = [
-    { label: 'UNCLASSIFIED',      cls: 'cl-unclassified',  at: 0.00 },
-    { label: 'RESTRICTED',        cls: 'cl-restricted',    at: 0.28 },
-    { label: 'CONFIDENTIAL',      cls: 'cl-confidential',  at: 0.55 },
-    { label: 'TOP SECRET // SCI', cls: 'cl-topsecret',     at: 0.78 },
-  ];
-  let clCurrent = 0;
+  /* ─── Cascade trigger: fire when the .cascade section enters the upper viewport ─── */
+  const cascadeSection = document.querySelector('.cascade');
+  let cascadeFired = false;
 
-  function updateClassification(ratio) {
-    let next = 0;
-    for (let i = clLevels.length - 1; i >= 0; i--) {
-      if (ratio >= clLevels[i].at) { next = i; break; }
-    }
-    if (next === clCurrent) return;
-    clCurrent = next;
-    const lvl = clLevels[next];
-    clEl.textContent = lvl.label;
-    clEl.className   = lvl.cls;
-    flashChromatic(180);
-  }
-
-  /* ═══════════════════════════════════════════
-     GLITCH / CHROMATIC FLASH
-  ═══════════════════════════════════════════ */
-
-  const glitchEl = document.getElementById('glitch-overlay');
-
-  function flashChromatic(ms = 120) {
-    glitchEl.style.opacity = '1';
-    clearTimeout(glitchEl._t);
-    glitchEl._t = setTimeout(() => { glitchEl.style.opacity = '0'; }, ms);
-  }
-
-  // Random ambient interference
-  (function scheduleGlitch() {
-    setTimeout(() => {
-      flashChromatic(60 + Math.random() * 80);
-      scheduleGlitch();
-    }, 6000 + Math.random() * 14000);
-  })();
-
-  /* ═══════════════════════════════════════════
-     TEXT DECODE EFFECT
-  ═══════════════════════════════════════════ */
-
-  const NOISE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*><[]';
-
-  function decodeText(el, finalText, duration = 1200) {
-    const STEPS = 28;
-    let step = 0;
-    const tick = () => {
-      if (step > STEPS) { el.textContent = finalText; return; }
-      const prog = step / STEPS;
-      const revealed = Math.floor(prog * finalText.length);
-      let out = '';
-      for (let i = 0; i < finalText.length; i++) {
-        if (finalText[i] === ' ' || finalText[i] === '\n') { out += finalText[i]; }
-        else if (i < revealed)                             { out += finalText[i]; }
-        else                                               { out += NOISE[Math.floor(Math.random() * NOISE.length)]; }
-      }
-      el.textContent = out;
-      step++;
-      setTimeout(tick, duration / STEPS);
-    };
-    tick();
-  }
-
-  // Fire hero hook decode after initial fade-in
-  setTimeout(() => {
-    const hookEl = document.getElementById('hero-hook');
-    if (hookEl) decodeText(hookEl, hookEl.textContent.trim(), 1600);
-  }, 2800);
-
-  /* ═══════════════════════════════════════════
-     INTERSECTION OBSERVER — REVEAL LINES
-  ═══════════════════════════════════════════ */
-
-  const revealObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const lines = entry.target.querySelectorAll('.reveal-line');
-      lines.forEach((ln, i) => {
-        setTimeout(() => ln.classList.add('revealed'), i * 140);
+  if (cascadeSection && atlas) {
+    const cio = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !cascadeFired) {
+          cascadeFired = true;
+          window.Cascade.triggerCascade(null, atlas);
+          window.Cascade.showMarginalia();
+          startCounters();
+          cio.disconnect();
+        }
       });
-      revealObs.unobserve(entry.target);
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.chapter').forEach(ch => revealObs.observe(ch));
-
-  /* ═══════════════════════════════════════════
-     CHAPTER 3 · PIN-AND-SCRUB
-  ═══════════════════════════════════════════ */
-
-  const ch3      = document.getElementById('ch3');
-  const pinTrack = document.getElementById('pin-track');
-  const scanRows = document.querySelectorAll('.scan-row');
-
-  let stage2Fired   = false;
-  let counterActive = false;
-
-  function updatePinStage(progress) {
-    // progress 0→1 through ch3's scroll range
-    if (progress < 0.33) {
-      pinTrack.style.transform = 'translateX(0%)';
-      // Animate the model count when stage 0 is first visible
-      const el = document.getElementById('stat-models');
-      if (el && !el.dataset.done && progress > 0.05) {
-        el.dataset.done = '1';
-        countUp(el, 18, 1400);
-      }
-
-    } else if (progress < 0.66) {
-      pinTrack.style.transform = 'translateX(-33.333%)';
-      // Cascade-in the infrastructure scan rows
-      scanRows.forEach(row => {
-        const d = parseInt(row.dataset.d) || 0;
-        setTimeout(() => row.classList.add('active'), d);
-      });
-
-    } else {
-      pinTrack.style.transform = 'translateX(-66.666%)';
-      if (!stage2Fired) {
-        stage2Fired = true;
-        globe.setState('cascade');
-        flashChromatic(350);
-        startCounters();
-      }
-    }
+    }, { threshold: 0.35 });
+    cio.observe(cascadeSection);
   }
 
-  function countUp(el, target, duration) {
-    const steps = 30;
-    let step = 0;
-    const iv = setInterval(() => {
-      const v = Math.round((step / steps) * target);
-      el.textContent = String(v).padStart(2, '0');
-      step++;
-      if (step > steps) { clearInterval(iv); el.textContent = String(target).padStart(2, '0'); }
-    }, duration / steps);
-  }
+  /* ─── Modal ─── */
+  setupModal();
+});
 
-  function startCounters() {
-    if (counterActive) return;
-    counterActive = true;
+/* ─────────────────────────────────────────────
+   Cascade counters (subtle, slow tick)
+───────────────────────────────────────────── */
+function startCounters() {
+  const nE = document.getElementById('ctr-nodes');
+  const jE = document.getElementById('ctr-jur');
+  const tE = document.getElementById('ctr-trust');
+  if (!nE || !jE || !tE) return;
 
-    const nodesEl = document.getElementById('ctr-nodes');
-    const jurEl   = document.getElementById('ctr-jur');
-    const trustEl = document.getElementById('ctr-trust');
+  let n = 0, j = 0, t = 0;
+  const NMAX = 14, JMAX = 12, TMAX = 9847;
 
-    let nodes = 0, jur = 0, trust = 0;
+  const iv = setInterval(() => {
+    if (n < NMAX) n = Math.min(NMAX, n + 1);
+    if (j < JMAX) j = Math.min(JMAX, j + (Math.random() > 0.45 ? 1 : 0));
+    t = Math.min(TMAX, t + Math.floor(Math.random() * 120) + 30);
 
-    const iv = setInterval(() => {
-      if (nodes < 14) nodes  = Math.min(14,   nodes  + Math.floor(Math.random() * 2) + 1);
-      if (jur   < 12) jur    = Math.min(12,   jur    + (Math.random() > 0.4 ? 1 : 0));
-      trust = Math.min(9847,  trust  + Math.floor(Math.random() * 120) + 30);
+    nE.textContent = String(n).padStart(2, '0');
+    jE.textContent = String(j).padStart(2, '0');
+    tE.textContent = String(t).padStart(4, '0');
 
-      nodesEl.textContent = String(nodes).padStart(3, '0');
-      jurEl.textContent   = String(jur).padStart(2,  '0');
-      trustEl.textContent = String(trust).padStart(4, '0');
+    if (n >= NMAX && j >= JMAX && t >= TMAX) clearInterval(iv);
+  }, 230);
+}
 
-      if (nodes >= 14 && jur >= 12 && trust >= 9847) clearInterval(iv);
-    }, 180);
-  }
+/* ─────────────────────────────────────────────
+   Modal
+───────────────────────────────────────────── */
+function setupModal() {
+  const modal = document.getElementById('modal');
+  const open  = document.getElementById('open-modal');
+  const close = document.getElementById('modal-close');
+  const form  = document.getElementById('intake-form');
+  const err   = document.getElementById('m-err');
+  const recv  = document.getElementById('m-received');
+  const num   = document.getElementById('rcv-num');
 
-  /* ═══════════════════════════════════════════
-     SCROLL HANDLER
-  ═══════════════════════════════════════════ */
+  if (!modal || !open) return;
 
-  // Cache layout values (refresh on resize)
-  let ch2Top, ch3Top, ch3H, ch4Top, ch5Top, docH, winH;
-
-  function cacheLayout() {
-    winH  = innerHeight;
-    docH  = document.documentElement.scrollHeight - winH;
-    ch2Top = document.getElementById('ch2').offsetTop;
-    ch3Top = ch3.offsetTop;
-    ch3H   = ch3.offsetHeight;
-    ch4Top = document.getElementById('ch4').offsetTop;
-    ch5Top = document.getElementById('ch5').offsetTop;
-  }
-
-  cacheLayout();
-  window.addEventListener('resize', cacheLayout);
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  function onScroll() {
-    const sy    = scrollY;
-    const ratio = sy / docH;
-
-    // Classification
-    updateClassification(ratio);
-
-    // Globe scroll progress (drives rotation speed)
-    globe.scrollProg = ratio;
-
-    // Globe state by chapter
-    if (sy < ch2Top - winH * 0.4) {
-      globe.setState('pristine');
-    } else if (sy < ch3Top - winH * 0.3) {
-      globe.setState('surveillance');
-    } else if (sy >= ch4Top - winH * 0.3) {
-      globe.setState('recovery');
-    }
-
-    // Pin-and-scrub: ch3
-    if (sy >= ch3Top && sy < ch4Top) {
-      const scrubRange = ch3H - winH;
-      const prog       = scrubRange > 0 ? (sy - ch3Top) / scrubRange : 0;
-      updatePinStage(Math.max(0, Math.min(1, prog)));
-    }
-  }
-
-  /* ═══════════════════════════════════════════
-     MODAL
-  ═══════════════════════════════════════════ */
-
-  const overlay   = document.getElementById('modal-overlay');
-  const closeBtn  = document.getElementById('modal-close');
-  const ctaBtn    = document.getElementById('cta-btn');
-  const form      = document.getElementById('access-form');
-  const formError = document.getElementById('form-error');
-
-  ctaBtn.addEventListener('click', () => {
-    overlay.classList.add('open');
+  function show() {
+    modal.hidden = false;
+    requestAnimationFrame(() => modal.classList.add('open'));
     document.body.style.overflow = 'hidden';
-  });
-
-  function closeModal() {
-    overlay.classList.remove('open');
+  }
+  function hide() {
+    modal.classList.remove('open');
     document.body.style.overflow = '';
+    setTimeout(() => {
+      modal.hidden = true;
+      form.hidden = false;
+      recv.hidden = true;
+      form.reset();
+      err.hidden = true;
+    }, 320);
   }
 
-  closeBtn.addEventListener('click', closeModal);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  open.addEventListener('click', show);
+  close.addEventListener('click', hide);
+  modal.addEventListener('click', e => { if (e.target === modal) hide(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) hide(); });
 
   form.addEventListener('submit', e => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(form));
-
     if (!data.institution || !data.contribution || !data.motivation || !data.email) {
-      formError.hidden = false;
+      err.hidden = false;
       return;
     }
+    err.hidden = true;
 
-    formError.hidden = true;
+    const ctl = `OPC-2026-${String(Math.floor(Math.random() * 9000) + 1000)}-${String.fromCharCode(65 + Math.floor(Math.random() * 6))}`;
+    num.textContent = ctl;
+    form.hidden = true;
+    recv.hidden = false;
 
-    const sub  = encodeURIComponent('Operation Cascade — Access Request');
+    // Mailto fallback after a brief beat
     const body = encodeURIComponent(
-      `WHO ARE YOU:\n${data.institution}\n\n` +
-      `WHAT DO YOU BRING:\n${data.contribution}\n\n` +
-      `WHY THIS MATTERS:\n${data.motivation}\n\n` +
-      `CONTACT: ${data.email}`
+      `Control: ${ctl}\n\n` +
+      `i. Who: ${data.institution}\n\n` +
+      `ii. Bring: ${data.contribution}\n\n` +
+      `iii. Why: ${data.motivation}\n\n` +
+      `Contact: ${data.email}`
     );
-
-    window.location.href = `mailto:cascade@operationcascade.org?subject=${sub}&body=${body}`;
+    setTimeout(() => {
+      window.location.href = `mailto:cascade@operationcascade.org?subject=${encodeURIComponent('OP-Cascade Intake · ' + ctl)}&body=${body}`;
+    }, 1800);
   });
-
-  /* ═══════════════════════════════════════════
-     INITIAL GLOBE STATE
-  ═══════════════════════════════════════════ */
-
-  globe.setState('pristine');
-
-  // Run one scroll pass so state is correct if user lands mid-page
-  onScroll();
-
-});
+}
