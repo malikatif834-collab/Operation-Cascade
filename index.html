@@ -12,7 +12,6 @@
 </head>
 <body>
 
-  <!-- Tiny SVG defs (kept lean — one filter, used in two places only) -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
       <filter id="ink" x="-6%" y="-6%" width="112%" height="112%">
@@ -22,228 +21,290 @@
     </defs>
   </svg>
 
-  <main class="doc">
+  <!-- ════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-cls">Top Secret &nbsp;//&nbsp; SCI &nbsp;//&nbsp; OP-CASCADE</p>
 
-    <!-- ════════════════════════════════════════
-         §I  COVER
-    ════════════════════════════════════════ -->
-    <section class="page page-cover" id="s1">
-      <p class="cls-line">TOP SECRET &nbsp;//&nbsp; SCI &nbsp;//&nbsp; OP-CASCADE</p>
-
-      <div class="cover-block">
-        <p class="cover-eyebrow">A coordinated briefing on agentic AI security,<br>critical infrastructure supply chains,<br>and the development of an enforceable national standard</p>
-        <p class="cover-eyebrow cover-eyebrow-em">prepared for the G7 Evian Summit &middot; two thousand and twenty-six</p>
-
-        <h1 class="cover-title">
-          <span class="cover-over">Operation</span>
-          <span class="cover-name">Cascade</span>
-        </h1>
-
-        <blockquote class="cover-hook">
-          <span class="dropcap">E</span><span class="hook-text">very node trusts the next.<br><em>That is the vulnerability.</em></span>
-        </blockquote>
-
-        <p class="cover-byline">Digital Governance Council &nbsp;&middot;&nbsp; Conseil de Gouvernance Num&eacute;rique</p>
-      </div>
-
-      <p class="cover-foot mono">OP-CASCADE &middot; DOC-001-A &middot; rev. A &middot; 13 may 2026</p>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         §II  THE THREAT ENVIRONMENT
-    ════════════════════════════════════════ -->
-    <section class="page page-essay" id="s2">
-      <header class="page-head">
-        <span class="page-roman">II</span>
-        <span class="page-name">The Threat Environment</span>
-      </header>
-
-      <article class="essay">
-        <p class="lede">
-          <span class="dropcap">A</span>gentic AI systems are currently operating across critical infrastructure. The Canada Cyber Centre, CISA, NSA, the United Kingdom, Australia, and New Zealand issued a coordinated advisory establishing this as present fact. Their consensus: the risks are real, and the immaturity of relevant standards is actively <em>amplifying</em> them.
-        </p>
-
-        <p>Two immediate requirements follow from that consensus. The first is to expand threat intelligence through cross-sector collaboration. The second is to develop robust, agent-specific evaluations. Neither requirement has been met. Neither is close.</p>
-
-        <p>The scale of the problem compounds daily. Agentic AI in supply-chain software is expanding from under two billion dollars in 2025 to fifty-three billion by 2030. Sixty percent of supply-chain enterprises will have adopted agentic systems within five years. Multi-agent orchestration &mdash; agents directing other agents across organizational and jurisdictional lines &mdash; grew from one percent to twenty-two percent of deployments in just two years. Eighty percent of workers already use unapproved AI tools. Only eleven percent of those using generative AI at work do so through governed corporate channels.</p>
-
-        <p class="kicker">The governance gap is not approaching.<br>It is already here, and the systems are already running.</p>
-
-        <p class="margin-note">
-          <span class="mn-hand">empirical analysis of 42,000 agent skills found that 26% contain at least one documented security vulnerability. nobody designed the intersection of these tiers &mdash; it emerged from rapid adoption. <span class="mn-arrow">see §III &rarr;</span></span>
-        </p>
-
-        <p>The architecture of risk is layered. Enterprise platforms &mdash; SAP Joule, Oracle across twenty-two operational areas, Salesforce Agentforce in eighteen thousand organizations, Microsoft, Amazon, Google &mdash; sit atop orchestration frameworks that string multiple AI providers together, which in turn draw from a dense and largely ungoverned marketplace of skills and plugins. Agents operating across these tiers meet at connection points without any shared standard. Nobody designed the intersection. It emerged entirely from the speed of adoption.</p>
-
-        <p>The traditional breach lifecycle runs two hundred and seventy-seven days from intrusion to containment. That benchmark was established for human-operated attacks. Autonomous agentic propagation does not observe human timelines.</p>
-      </article>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         §III  THE FINDING
-    ════════════════════════════════════════ -->
-    <section class="page page-finding" id="s3">
-      <header class="page-head">
-        <span class="page-roman">III</span>
-        <span class="page-name">The Finding</span>
-      </header>
-
-      <!-- Pull figures -->
-      <div class="finding-fig">
-        <div class="ff-col">
-          <span class="ff-n">18</span>
-          <span class="ff-l">frontier models, controlled adversarial conditions &mdash; University of Calabria</span>
-        </div>
-        <div class="ff-rule" aria-hidden="true"></div>
-        <div class="ff-col">
-          <span class="ff-n">100<span class="ff-pct">&#8239;%</span></span>
-          <span class="ff-l">inter-agent trust exploitation &middot; success rate</span>
-        </div>
-      </div>
-
-      <p class="finding-coda">
-        When an instruction arrives through an agent-to-agent channel,<br>
-        the receiving model extends <em>total trust</em> to its peer &mdash; regardless of payload.<br>
-        This is not a configuration flaw. It is a structural condition.
+      <p class="hero-eyebrow">
+        A coordinated briefing on agentic AI security,<br>
+        critical infrastructure supply chains,<br>
+        and the development of an enforceable national standard
       </p>
 
-      <!-- The signature illustration: the schematic -->
-      <figure class="schematic">
-        <figcaption class="sc-cap">
-          <span class="sc-cap-fig">fig. iii</span>
-          <span class="sc-cap-txt">Subject pipeline topology &mdash; binational critical infrastructure corridor, twenty entities, twelve jurisdictions. One point of entry. No unified trust layer.</span>
-        </figcaption>
-        <div class="sc-frame">
-          <svg id="schematic-svg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet" aria-label="Hand-drawn schematic of an agentic supply chain pipeline"></svg>
-          <div class="sc-marginalia" id="sc-marginalia"></div>
-        </div>
-      </figure>
+      <h1 class="hero-title">
+        <span class="t-over">Operation</span>
+        Cascade
+      </h1>
 
-      <!-- Subject corridor -->
-      <section class="corridor">
-        <h3 class="corridor-h">The subject corridor</h3>
-        <dl class="corridor-list">
-          <dt>Entity</dt>             <dd>binational critical infrastructure corridor</dd>
-          <dt>Subcontractors</dt>     <dd>twenty entities across three tiers</dd>
-          <dt>Jurisdictions</dt>      <dd>twelve countries</dd>
-          <dt>Authorization trail</dt><dd><span class="emph-red">none &mdash; no human-readable record</span></dd>
-          <dt>Unified trust layer</dt><dd><span class="emph-red">none identified</span></dd>
-          <dt>Points of entry</dt>    <dd><span class="emph-red">one &mdash; active</span></dd>
-        </dl>
-      </section>
+      <blockquote class="hero-hook">
+        <span class="dropcap">E</span>
+        <span class="hook-text">very node trusts the next.<br><em>That is the vulnerability.</em></span>
+      </blockquote>
 
-      <!-- Cascade -->
-      <section class="cascade">
-        <h3 class="cascade-h">Cascade initiated</h3>
-        <div class="readout">
-          <div class="ro-row">
-            <span class="ro-n" id="ctr-nodes">00</span>
-            <span class="ro-l">nodes compromised</span>
-          </div>
-          <div class="ro-row">
-            <span class="ro-n" id="ctr-jur">00</span>
-            <span class="ro-l">jurisdictions affected</span>
-          </div>
-          <div class="ro-row">
-            <span class="ro-n" id="ctr-trust">0000</span>
-            <span class="ro-l">trust handshakes failed</span>
-          </div>
-        </div>
-        <p class="cascade-coda">Autonomous propagation. No human in the loop. No alert triggered.<br><em>Without a coding error by the attacker, detection would have taken months.</em></p>
-      </section>
+      <p class="hero-byline">Digital Governance Council &nbsp;&middot;&nbsp; Conseil de Gouvernance Num&eacute;rique &nbsp;&middot;&nbsp; 13 May 2026</p>
+    </div>
 
-      <!-- Legal vacuum -->
-      <article class="essay" style="margin-top: 3rem">
-        <p>The legal architecture fails at precisely the moment it is needed. Under Canada&rsquo;s federal privacy framework, transferring data processing to a third party does not transfer accountability &mdash; organizations remain legally responsible for their entire supply chain. Bill&nbsp;C-8 mandates fines up to fifteen million dollars and personal liability for directors and officers. Yet when an autonomous agent at a fourth-tier supplier makes a harmful decision that propagates through multiple intermediary suppliers before downstream harm occurs at a critical infrastructure operator, three questions have no answer: which regulatory body has standing, which framework governs liability, and who holds the duty of care when no human intent existed.</p>
+    <div class="hero-right">
+      <canvas id="globe-canvas" aria-label="Rotating globe showing red network arcs between international infrastructure nodes"></canvas>
+    </div>
+  </section>
 
-        <p>Voluntary industry protocols cannot resolve this. A 2025 technology consortium standard with over a hundred and fifty participating organizations establishes identity documents, basic authentication, and task tracking &mdash; and carries no enforcement mechanism. An accredited national standard, legally defensible and harmonized with international frameworks, capable of being mandated as a contract condition in government procurement and adopted by reference in regulation, does not yet exist.</p>
+  <!-- ════════════════════════════════════════
+       THE MANDATE
+  ════════════════════════════════════════ -->
+  <section class="mandate" id="s-mandate">
+    <div class="mandate-art" aria-hidden="true"></div>
+    <div class="mandate-inner">
+      <p class="mandate-kicker">Five Eyes Advisory &nbsp;&middot;&nbsp; Issued May 2026</p>
+      <span class="mandate-rule" id="mandate-rule"></span>
 
-        <p class="kicker">NIST and the EU AI Act signal urgency.<br>Neither produces the enforceable standard this interaction requires.</p>
-      </article>
-    </section>
+      <h2 class="mandate-headline">
+        Agentic AI systems are currently operating across critical infrastructure.
+        <span class="hl-red">The risks are real.</span>
+        The immaturity of relevant standards is actively amplifying them.
+      </h2>
 
-    <!-- ════════════════════════════════════════
-         §IV  THE RESPONSE
-    ════════════════════════════════════════ -->
-    <section class="page page-essay" id="s4">
-      <header class="page-head">
-        <span class="page-roman">IV</span>
-        <span class="page-name">The Response &mdash; Operation Cascade</span>
-      </header>
-
-      <article class="essay">
-        <p class="lede">
-          <span class="dropcap">O</span>peration Cascade is the mechanism built to bridge the Five Eyes guidance and the standards that do not yet exist. It is a G7-level agentic supply-chain threat simulation that generates the empirical foundation necessary for a living, accredited national standard &mdash; through three interlocking pillars that the exercise is designed to produce simultaneously.
-        </p>
-
-        <p>The first pillar is reproducible methodology. Scalable controlled adversarial scenarios, built on existing university research infrastructure and cloud environments, that can be replicated and expanded as the threat landscape evolves. The second pillar is empirical field data: not modeled risk, but documented behavior &mdash; technical propagation, human governance decisions, framework breakdowns, and jurisdictional friction captured during a live multi-sector exercise. The third pillar is the living standard itself: a legally defensible accredited national standard for Canada, built entirely on field-validated data, harmonized through the Digital Governance Standards Institute, ISO, and the OECD to serve as the G7 reference model.</p>
-
-        <p>An accredited standard, once issued, reorganizes market behavior immediately. Government agencies specify compliance as a contract condition; the standard becomes the market floor, enforced through every public sector RFP. Regulators across sectors adopt it by reference, building technical requirements into their frameworks without authoring them from scratch. Documented compliance becomes legal evidence of due diligence. And through Canada&rsquo;s standards infrastructure, the exercise produces the international reference model that allied democratic economies need.</p>
-
-        <p>The methodology merges public mandate alignment with direct private sector incentives. The public sector stream utilizes existing research infrastructure and draws on mandate alignment across federal bodies for sustained funding as scenarios scale in complexity. The private sector stream targets organizations whose tools are being tested and whose customers will be governed by the standard. A third force accelerates both: liability surrounding agentic AI is forcing new underwriting models, and field-validated empirical data from this exercise carries immense actuarial value to insurance carriers.</p>
-
-        <ul class="coalition">
-          <li>National cybersecurity bodies &mdash; mandate to protect infrastructure</li>
-          <li>Government standards agencies &mdash; authority to set digital compliance metrics</li>
-          <li>Critical-infrastructure operators &mdash; managing the active supply chains</li>
-          <li>Top-tier academic researchers &mdash; intersection of technical execution and legal theory</li>
-          <li>International research partners &mdash; ensuring borderless relevance and harmonization</li>
-          <li>Provincial and municipal authorities &mdash; downstream nodes in the cascade</li>
-        </ul>
-
-        <p class="kicker">The Five Eyes guidance exists.<br>The standards do not.<br>Operation Cascade is the mechanism to bridge them.</p>
-      </article>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         §V  EARN YOUR SEAT
-    ════════════════════════════════════════ -->
-    <section class="page page-intake" id="s5">
-      <header class="page-head">
-        <span class="page-roman">V</span>
-        <span class="page-name">Earn Your Seat</span>
-      </header>
-
-      <p class="intake-pre">
-        <span class="dropcap">T</span>he institutional authority required to execute this mandate is already assembled. No further authorization is required to begin. Participation in Operation Cascade is not open enrollment &mdash; it is reserved for institutions with operational standing in the sectors the exercise models. The Evaluation Committee considers each application against the three questions that follow.
+      <p class="mandate-body">
+        A coordinated advisory from the Canada Cyber Centre, CISA, NSA, the United Kingdom, Australia, and New Zealand establishes the current threat as present fact &mdash; not projection. Two immediate requirements follow.
       </p>
 
-      <ol class="qs">
-        <li>
-          <span class="q-r">i</span>
-          <div>
-            <h4 class="q-h">Who are you?</h4>
-            <p class="q-d">Your institution, your mandate, your stake in the problem. What sector do you operate in, and what is your operational relationship to agentic supply chains or the governance of critical infrastructure?</p>
-          </div>
-        </li>
-        <li>
-          <span class="q-r">ii</span>
-          <div>
-            <h4 class="q-h">What do you bring?</h4>
-            <p class="q-d">Operational data. Research capacity. Simulation expertise. Governance authority. Procurement influence. What does your participation make possible that is otherwise impossible &mdash; and what does your absence leave unrepresented?</p>
-          </div>
-        </li>
-        <li>
-          <span class="q-r">iii</span>
-          <div>
-            <h4 class="q-h">Why does this matter to you?</h4>
-            <p class="q-d">Not a credentials summary. Tell us what is at stake for your organization &mdash; and why you need to be in the room when this exercise runs and the standard is written.</p>
-          </div>
-        </li>
-      </ol>
+      <ul class="mandate-reqs">
+        <li>Expand threat intelligence through cross-sector collaboration.</li>
+        <li>Develop robust, agent-specific evaluations. Neither requirement has been met.</li>
+      </ul>
 
-      <div class="intake-act">
-        <button class="submit" id="open-modal" type="button">Submit for Review</button>
-        <p class="intake-note">
-          Applications are reviewed by the Operation Cascade Evaluation Committee.<br>
-          Selected participants are contacted directly. There is no waitlist.
-        </p>
+      <div class="mandate-stats">
+        <div class="ms-item">
+          <span class="ms-n">$53<em>B</em></span>
+          <span class="ms-l">Agentic AI in supply-chain software by 2030 &mdash; from under $2B today</span>
+        </div>
+        <div class="ms-item">
+          <span class="ms-n">26<em>%</em></span>
+          <span class="ms-l">Of 42,000 agent skills empirically analyzed contain at least one documented security vulnerability</span>
+        </div>
+        <div class="ms-item">
+          <span class="ms-n">22<em>%</em></span>
+          <span class="ms-l">Multi-agent orchestration deployments &mdash; up from 1% two years ago</span>
+        </div>
+        <div class="ms-item">
+          <span class="ms-n">80<em>%</em></span>
+          <span class="ms-l">Of workers use unapproved AI tools &mdash; only 11% operate through governed corporate channels</span>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <p class="cls-line cls-foot">TOP SECRET &nbsp;//&nbsp; SCI &nbsp;//&nbsp; OP-CASCADE</p>
-    </section>
+  <!-- ════════════════════════════════════════
+       THE FINDING
+  ════════════════════════════════════════ -->
+  <section class="finding" id="s-finding">
+    <div class="finding-art" aria-hidden="true"></div>
 
-  </main>
+    <div class="finding-stats" id="finding-stats">
+      <div class="fs-item">
+        <span class="fs-n" id="ctr-models">18</span>
+        <span class="fs-l">frontier models tested in controlled adversarial conditions</span>
+      </div>
+      <div class="fs-rule" role="separator"></div>
+      <div class="fs-item">
+        <span class="fs-n">100<span class="fs-pct">%</span></span>
+        <span class="fs-l">inter-agent trust exploitation &mdash; success rate</span>
+      </div>
+    </div>
+
+    <p class="finding-source">
+      Source: <strong>University of Calabria</strong> &nbsp;&middot;&nbsp; controlled adversarial testing across eighteen state-of-the-art models
+    </p>
+
+    <p class="finding-coda">
+      When an instruction arrives through an agent-to-agent channel, the receiving model extends <em>total trust</em> to its peer, regardless of payload. This is not a configuration flaw. It is a structural condition.
+    </p>
+
+    <!-- Schematic -->
+    <div class="schematic-wrap">
+      <div class="sc-caption">
+        <span class="sc-fig">fig. III</span>
+        <span class="sc-txt">Subject pipeline topology &mdash; binational critical infrastructure corridor, twenty entities, twelve jurisdictions. One point of entry. No unified trust layer.</span>
+      </div>
+      <div class="sc-frame">
+        <svg id="schematic-svg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid meet" aria-label="Hand-drawn schematic of an agentic supply chain pipeline showing cascade infection"></svg>
+        <div class="sc-marginalia" id="sc-marginalia"></div>
+      </div>
+    </div>
+
+    <!-- Cascade readout -->
+    <div class="cascade-block">
+      <h3 class="cascade-h">Cascade initiated</h3>
+      <div class="readout">
+        <div class="ro-row">
+          <span class="ro-n" id="ctr-nodes">00</span>
+          <span class="ro-l">nodes compromised</span>
+        </div>
+        <div class="ro-row">
+          <span class="ro-n" id="ctr-jur">00</span>
+          <span class="ro-l">jurisdictions affected</span>
+        </div>
+        <div class="ro-row">
+          <span class="ro-n" id="ctr-trust">0000</span>
+          <span class="ro-l">trust handshakes failed</span>
+        </div>
+      </div>
+      <p class="cascade-coda">Autonomous propagation. No human in the loop. No alert triggered. <em>Without a coding error by the attacker, detection would have taken months.</em></p>
+    </div>
+
+    <!-- Corridor -->
+    <div class="corridor-block">
+      <h3 class="corridor-h">The subject corridor</h3>
+      <dl class="corridor-dl">
+        <dt>Entity</dt>                <dd>binational critical infrastructure corridor</dd>
+        <dt>Subcontractors</dt>        <dd>twenty entities across three tiers</dd>
+        <dt>Jurisdictions</dt>         <dd>twelve countries</dd>
+        <dt>Authorization trail</dt>   <dd><span class="emph-red">none &mdash; no human-readable record</span></dd>
+        <dt>Unified trust layer</dt>   <dd><span class="emph-red">none identified</span></dd>
+        <dt>Points of entry</dt>       <dd><span class="emph-red">one &mdash; active</span></dd>
+      </dl>
+    </div>
+
+    <!-- Legal vacuum triptych -->
+    <div class="legal-triptych">
+      <div class="lt-col">
+        <p class="lt-q">Which regulatory body has standing?</p>
+        <p class="lt-body">When harm propagates through a fourth-tier supplier across four jurisdictions, no existing framework identifies which regulatory body has standing to act. Bill C-8 mandates fines up to $15M and personal director liability &mdash; but only against the operator at the downstream end, who did not direct the agent.</p>
+      </div>
+      <div class="lt-col">
+        <p class="lt-q">Which framework governs liability?</p>
+        <p class="lt-body">Under Canada&rsquo;s federal privacy framework, transferring data processing to a third party does not transfer accountability. Organizations remain legally responsible for their entire supply chain. But no framework maps that responsibility onto multi-tier autonomous agent pipelines.</p>
+      </div>
+      <div class="lt-col">
+        <p class="lt-q">Who holds the duty of care when no human intent existed?</p>
+        <p class="lt-body">NIST&rsquo;s critical infrastructure concept note and the EU AI Act signal urgency. Neither produces an enforceable standard for the precise interaction &mdash; agent to agent, across organizational lines, without a human in the loop &mdash; that this threat exploits.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       INFRASTRUCTURE SECTORS
+  ════════════════════════════════════════ -->
+  <div id="sectors" aria-label="Critical infrastructure sectors at risk">
+    <!-- Panels injected by sectors.js -->
+  </div>
+
+  <!-- ════════════════════════════════════════
+       THE RESPONSE
+  ════════════════════════════════════════ -->
+  <section class="response" id="s-response">
+    <p class="response-kicker">Operation Cascade &nbsp;&middot;&nbsp; The Response</p>
+
+    <div class="response-intro">
+      <span class="dropcap">O</span>
+      <p>peration Cascade is the mechanism built to bridge the Five Eyes guidance and the standards that do not yet exist. It is a G7-level agentic supply-chain threat simulation that generates the empirical foundation necessary for a living, accredited national standard &mdash; through three interlocking pillars that the exercise is designed to produce simultaneously.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <span class="pillar-n">01</span>
+        <h3 class="pillar-h">Reproducible Methodology</h3>
+        <p class="pillar-body">Scalable controlled adversarial scenarios, built on existing university research infrastructure and cloud environments. Runs scenarios that can be replicated and expanded as the threat landscape evolves.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-n">02</span>
+        <h3 class="pillar-h">Empirical Field Data</h3>
+        <p class="pillar-body">Not modeled risk &mdash; documented behavior. Technical propagation, human governance decisions, framework breakdowns, and jurisdictional friction captured during a live multi-sector exercise. The record that a standard requires.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-n">03</span>
+        <h3 class="pillar-h">A Living Standard</h3>
+        <p class="pillar-body">A legally defensible accredited national standard for Canada, built entirely on field-validated data. Harmonized through the Digital Governance Standards Institute, ISO, and the OECD to serve as the G7 reference model.</p>
+      </div>
+    </div>
+
+    <div class="impact">
+      <p class="impact-h">Cascading impact of an accredited standard</p>
+      <div class="impact-branches">
+        <div class="ib-item">
+          <h4 class="ib-h">Procurement Authority</h4>
+          <p class="ib-body">Government agencies specify compliance as a contract condition. The standard becomes the market floor, enforced through every public sector RFP across G7 member states.</p>
+        </div>
+        <div class="ib-item">
+          <h4 class="ib-h">Regulatory Oversight</h4>
+          <p class="ib-body">Regulators across sectors adopt the standard by reference, building technical requirements into their frameworks. Documented compliance becomes legal evidence of due diligence under Bill C-8 and equivalent frameworks.</p>
+        </div>
+        <div class="ib-item">
+          <h4 class="ib-h">International Harmonization</h4>
+          <p class="ib-body">Through Canada&rsquo;s standards infrastructure &mdash; DGSI, ISO, and the OECD &mdash; the exercise produces the international reference model that allied democratic economies need and do not yet have.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="coalition-block">
+      <p class="coalition-h">The coalition assembled</p>
+      <ul class="coalition-list">
+        <li>National cybersecurity bodies &mdash; mandate to protect infrastructure</li>
+        <li>Government standards agencies &mdash; authority to set digital compliance metrics</li>
+        <li>Critical-infrastructure operators &mdash; managing the active supply chains</li>
+        <li>Top-tier academic researchers &mdash; intersection of technical execution and legal theory</li>
+        <li>International research partners &mdash; ensuring borderless relevance and harmonization</li>
+        <li>Provincial and municipal authorities &mdash; downstream nodes in the cascade</li>
+      </ul>
+    </div>
+
+    <p class="response-kicker-final">
+      The Five Eyes guidance exists.<br>
+      The standards do not.<br>
+      <em>Operation Cascade is the mechanism to bridge them.</em>
+    </p>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       EARN YOUR SEAT
+  ════════════════════════════════════════ -->
+  <section class="intake" id="s-intake">
+    <div class="intake-coalition-art" aria-hidden="true"></div>
+
+    <p class="intake-kicker">No further authorization is required to begin.</p>
+
+    <div class="intake-pre">
+      <span class="dropcap">T</span>
+      <p>he institutional authority required to execute this mandate is already assembled. Participation in Operation Cascade is not open enrollment &mdash; it is reserved for institutions with operational standing in the sectors the exercise models. The Evaluation Committee considers each application against the three questions that follow.</p>
+    </div>
+
+    <ol class="qs">
+      <li>
+        <span class="q-r">i</span>
+        <div>
+          <h4 class="q-h">Who are you?</h4>
+          <p class="q-d">Your institution, your mandate, your stake in the problem. What sector do you operate in, and what is your operational relationship to agentic supply chains or the governance of critical infrastructure?</p>
+        </div>
+      </li>
+      <li>
+        <span class="q-r">ii</span>
+        <div>
+          <h4 class="q-h">What do you bring?</h4>
+          <p class="q-d">Operational data. Research capacity. Simulation expertise. Governance authority. Procurement influence. What does your participation make possible that is otherwise impossible &mdash; and what does your absence leave unrepresented?</p>
+        </div>
+      </li>
+      <li>
+        <span class="q-r">iii</span>
+        <div>
+          <h4 class="q-h">Why does this matter to you?</h4>
+          <p class="q-d">Not a credentials summary. Tell us what is at stake for your organization &mdash; and why you need to be in the room when this exercise runs and the standard is written.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="intake-act">
+      <button class="submit" id="open-modal" type="button">Submit for Review</button>
+      <p class="intake-note">
+        Applications are reviewed by the Operation Cascade Evaluation Committee.<br>
+        Selected participants are contacted directly. There is no waitlist.
+      </p>
+    </div>
+
+    <p class="cls-foot">Top Secret &nbsp;//&nbsp; SCI &nbsp;//&nbsp; OP-CASCADE &nbsp;&middot;&nbsp; DOC-001-A &nbsp;&middot;&nbsp; rev. A &nbsp;&middot;&nbsp; 13 May 2026</p>
+  </section>
 
   <!-- ─── Modal ─── -->
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Intake form" hidden>
@@ -282,6 +343,14 @@
     </div>
   </div>
 
+  <!-- ─── CDN ─── -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- ─── App ─── -->
+  <script src="js/globe.js"></script>
+  <script src="js/sectors.js"></script>
   <script src="js/cartography.js"></script>
   <script src="js/typography.js"></script>
   <script src="js/main.js"></script>

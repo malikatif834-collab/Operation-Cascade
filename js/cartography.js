@@ -122,23 +122,23 @@ function buildAtlas() {
   const tt1 = el('text', {
     x: 0, y: 0,
     'font-family': 'DM Serif Display, serif',
-    'font-size': 22, fill: '#1a1612',
+    'font-size': 22, fill: '#111214',
   }, title);
   tt1.textContent = 'Subject Pipeline';
   const tt2 = el('text', {
     x: 0, y: 16,
     'font-family': 'Source Serif 4, serif',
     'font-style': 'italic',
-    'font-size': 11, fill: '#3a3127',
+    'font-size': 11, fill: '#9aa5b4',
   }, title);
   tt2.textContent = 'topology · sketched from procurement records';
 
   /* Legend in the upper-right corner */
   const legend = el('g', { transform: 'translate(940, 32)' }, svg);
   const lentries = [
-    { y:  0, color: '#1a1612', dash: '', label: 'hierarchical trust' },
-    { y: 16, color: '#1a1612', dash: '4 3', label: 'marketplace ingress' },
-    { y: 32, color: '#8a2418', dash: '2 3', label: 'cross-trust · no governance' },
+    { y:  0, color: '#9aa5b4', dash: '', label: 'hierarchical trust' },
+    { y: 16, color: '#9aa5b4', dash: '4 3', label: 'marketplace ingress' },
+    { y: 32, color: '#e31a1a', dash: '2 3', label: 'cross-trust · no governance' },
   ];
   lentries.forEach(le => {
     el('line', {
@@ -149,7 +149,7 @@ function buildAtlas() {
     const t = el('text', {
       x: 36, y: le.y,
       'font-family': 'JetBrains Mono, monospace',
-      'font-size': 9.5, fill: '#3a3127',
+      'font-size': 9.5, fill: '#9aa5b4',
       'letter-spacing': '0.05em',
     }, legend);
     t.textContent = le.label;
@@ -167,9 +167,9 @@ function buildAtlas() {
     const b = nodeAnchor(B, cax, cay);
     const d = edgePath(a, b, e.type);
 
-    const stroke = e.type === 'x' ? '#8a2418' : '#1a1612';
+    const stroke = e.type === 'x' ? '#e31a1a' : '#9aa5b4';
     const dash   = e.type === 'm' ? '4 3' : (e.type === 'x' ? '2 3' : '');
-    const opacity = e.type === 'x' ? 0.55 : 0.42;
+    const opacity = e.type === 'x' ? 0.65 : 0.5;
     const sw     = e.type === 'h' ? 0.85 : 0.7;
 
     const path = el('path', {
@@ -196,8 +196,8 @@ function buildAtlas() {
     // outer rectangle
     el('rect', {
       x: 0, y: 0, width: n.w, height: n.h,
-      fill: '#ece2cd',
-      stroke: '#1a1612',
+      fill: '#f4f6f8',
+      stroke: '#6b7a8d',
       'stroke-width': n.tier === 0 ? 1.3 : 0.9,
       rx: 1.4, ry: 1.4,
     }, g);
@@ -206,8 +206,8 @@ function buildAtlas() {
     if (n.tier === 3) {
       el('circle', {
         cx: n.w - 8, cy: 8, r: 6,
-        fill: '#ece2cd',
-        stroke: '#1a1612',
+        fill: '#f4f6f8',
+        stroke: '#6b7a8d',
         'stroke-width': 0.7,
       }, g);
       const mt = el('text', {
@@ -215,7 +215,7 @@ function buildAtlas() {
         'text-anchor': 'middle',
         'font-family': 'JetBrains Mono, monospace',
         'font-size': 7, 'font-weight': 700,
-        fill: '#1a1612',
+        fill: '#111214',
       }, g);
       mt.textContent = 'M';
     }
@@ -228,7 +228,7 @@ function buildAtlas() {
       'font-size': n.tier === 0 ? 11 : 9.5,
       'font-weight': n.tier <= 1 ? 600 : 500,
       'letter-spacing': '0.1em',
-      fill: '#1a1612',
+      fill: '#111214',
     }, g);
     lbl.textContent = n.label;
 
@@ -240,14 +240,14 @@ function buildAtlas() {
   const arrowG = el('g', { transform: `translate(${origin.x},${origin.y + origin.h + 18})` }, svg);
   el('path', {
     d: 'M0 -10 L0 0 M-4 -4 L0 0 L4 -4',
-    stroke: '#8a2418', 'stroke-width': 1.1, fill: 'none',
+    stroke: '#e31a1a', 'stroke-width': 1.1, fill: 'none',
     'stroke-linecap': 'round', 'stroke-linejoin': 'round',
   }, arrowG);
   const at = el('text', {
     x: 0, y: 16,
     'text-anchor': 'middle',
     'font-family': 'Caveat, cursive',
-    'font-size': 17, fill: '#2b4666',
+    'font-size': 17, fill: '#e31a1a',
   }, arrowG);
   at.textContent = 'point of entry';
 
@@ -265,8 +265,8 @@ function triggerCascade(_unused, atlas) {
       const g = nodeEls[idx];
       const rect = g.querySelector('rect');
       if (rect) {
-        rect.setAttribute('fill', '#f3d8d0');
-        rect.setAttribute('stroke', '#8a2418');
+        rect.setAttribute('fill', '#fff0f0');
+        rect.setAttribute('stroke', '#e31a1a');
         rect.setAttribute('stroke-width', '1.4');
       }
       // Slap an angled "VOID" stamp on top
@@ -278,7 +278,7 @@ function triggerCascade(_unused, atlas) {
       }, g);
       el('rect', {
         x: -22, y: -8, width: 44, height: 14,
-        fill: 'none', stroke: '#8a2418', 'stroke-width': 1.1,
+        fill: 'none', stroke: '#e31a1a', 'stroke-width': 1.1,
         filter: 'url(#ink)',
       }, sg);
       const st = el('text', {
@@ -286,7 +286,7 @@ function triggerCascade(_unused, atlas) {
         'font-family': 'JetBrains Mono, monospace',
         'font-size': 8, 'font-weight': 700,
         'letter-spacing': '0.18em',
-        fill: '#8a2418',
+        fill: '#e31a1a',
       }, sg);
       st.textContent = 'VOID';
     }, delay);
@@ -296,7 +296,7 @@ function triggerCascade(_unused, atlas) {
     const path = rec.el;
     setTimeout(() => {
       const total = path.getTotalLength();
-      path.setAttribute('stroke', '#8a2418');
+      path.setAttribute('stroke', '#e31a1a');
       path.setAttribute('stroke-width', 1.6);
       path.setAttribute('opacity', 0.95);
       path.setAttribute('stroke-dasharray', total);

@@ -2,40 +2,63 @@
    OPERATION CASCADE — ORCHESTRATOR
    ═══════════════════════════════════════════════════ */
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
 
-  /* ─── Build the schematic synchronously (no network fetch) ─── */
+  /* ─── Schematic ─── */
   const atlas = window.Cascade.buildAtlas();
 
-  /* ─── Wait for fonts, then ink-in reveals ─── */
-  await window.Cascade.initTypography();
+  /* ─── Globe intro ─── */
+  if (window.Cascade.initGlobe) window.Cascade.initGlobe();
 
-  /* ─── Cascade trigger: fire when the .cascade section enters the upper viewport ─── */
-  const cascadeSection = document.querySelector('.cascade');
+  /* ─── Sectors ─── */
+  if (window.Cascade.initSectors) window.Cascade.initSectors();
+
+  /* ─── GSAP scroll reveals ─── */
+  if (window.Cascade.initTypography) window.Cascade.initTypography();
+
+  /* ─── Cascade trigger: fires when .cascade-block enters viewport ─── */
   let cascadeFired = false;
+  const cascadeBlock = document.querySelector('.cascade-block');
 
-  if (cascadeSection && atlas) {
-    const cio = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting && !cascadeFired) {
-          cascadeFired = true;
-          window.Cascade.triggerCascade(null, atlas);
-          window.Cascade.showMarginalia();
-          startCounters();
-          cio.disconnect();
-        }
+  if (cascadeBlock && atlas) {
+    if (typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.create({
+        trigger: cascadeBlock,
+        start: 'top 70%',
+        onEnter: () => {
+          if (!cascadeFired) {
+            cascadeFired = true;
+            window.Cascade.triggerCascade(null, atlas);
+            window.Cascade.showMarginalia();
+            startCounters();
+          }
+        },
       });
-    }, { threshold: 0.35 });
-    cio.observe(cascadeSection);
+    } else {
+      /* Fallback: IntersectionObserver if GSAP not available */
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !cascadeFired) {
+            cascadeFired = true;
+            window.Cascade.triggerCascade(null, atlas);
+            window.Cascade.showMarginalia();
+            startCounters();
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      io.observe(cascadeBlock);
+    }
   }
 
   /* ─── Modal ─── */
   setupModal();
 });
 
-/* ─────────────────────────────────────────────
-   Cascade counters (subtle, slow tick)
-───────────────────────────────────────────── */
+/* ─── Cascade counters ─── */
 function startCounters() {
   const nE = document.getElementById('ctr-nodes');
   const jE = document.getElementById('ctr-jur');
@@ -58,9 +81,7 @@ function startCounters() {
   }, 230);
 }
 
-/* ─────────────────────────────────────────────
-   Modal
-───────────────────────────────────────────── */
+/* ─── Modal ─── */
 function setupModal() {
   const modal = document.getElementById('modal');
   const open  = document.getElementById('open-modal');
@@ -108,7 +129,6 @@ function setupModal() {
     form.hidden = true;
     recv.hidden = false;
 
-    // Mailto fallback after a brief beat
     const body = encodeURIComponent(
       `Control: ${ctl}\n\n` +
       `i. Who: ${data.institution}\n\n` +
